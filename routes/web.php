@@ -16,4 +16,4 @@ Route::get('/', 'PlayController@index');
 Route::post('/create', 'PlayController@create');
 
 // オセロ
-Route::get('/othello', 'OthelloController@index');
+Route::get('/othello', 'Othello\OthelloController@index');
