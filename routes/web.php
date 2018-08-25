@@ -10,5 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// ○☓ゲーム
 Route::get('/', 'PlayController@index');
 Route::post('/create', 'PlayController@create');
+
+// オセロ
+Route::get('/othello', 'OthelloController@index');

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>オセロ</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        table {
+            table-layout: fixed;
+            width: 800px;
+            height: 800px;
+        }
+    </style>
+</head>
+<body>
+    <p>Othello</p>
+</body>
+<script src="{{ mix('/js/app.js') }}"></script>
+</html>
