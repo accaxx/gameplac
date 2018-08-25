@@ -13,6 +13,7 @@ class PlayController extends Controller
     private $key; // キー
     private $key_digit_one; // キーの1桁目
     private $key_digit_two; // キーの2桁目
+    private $response_message;
 
     const MARUBATSU = [
         0 => '×',
@@ -28,7 +29,7 @@ class PlayController extends Controller
     {
         $this->play_model = $play_model;
         $this->now_count = $this->play_model->all()->count() + 1;
-        $this->now_category = $this->now_count % 2;
+        $this->now_category = $this->now_count%2;
     }
 
     /**
@@ -55,45 +56,69 @@ class PlayController extends Controller
      */
     public function create(CreateRequest $request)
     {
-        // 結果が出るmin回数を下回る場合は保存のみ
-        if ($this->now_count < 5) {
-            $this->play_model->create($request->all());
-            return redirect('/');
-        }
-
-        // 入力キーを取得
-        $this->key = $request->key;
-        $this->key_digit_one = substr($this->key, 1, 1);
-        $this->key_digit_two = substr($this->key, 0, 1);
-
-        if ($this->isCheckGameSet()) {
-            $this->play_model->create($request->all());
-            return self::MARUBATSU[$this->now_category] . 'の勝利です!';
-        }
-
-        if ($this->now_count == 9) {
-            return '引き分けです！';
-        }
-
-        $this->play_model->create($request->all());
-        return redirect('/');
+        $input = $request->all();
+        $this->play_model->create($input);
+        if ($this->isMinResultNumberOfTimes()) {
+            return redirect('/')->with('message', $this->response_message);
+        };
+        if ($this->isGameSet($input)) {
+            return redirect('/')->with('message', $this->response_message);
+        };
+        return redirect('/')->with('message', $this->response_message);
     }
 
     /**
-     * 既にセットした
+     * 既にセットしたキーとセットされてないキーをViewに返す
+     * ※ twigでisset判断しないため(session使用へ変更すれば必要なし)
      *
      * @param $all_set_array
      * @return mixed
      */
     private function setAllKey($all_set_array)
     {
+        $all = [];
         foreach (self::KEY as $key) {
-            if (isset($all_set_array[$key])) {
-                continue;
-            }
-            $all_set_array[$key] = null;
+            $all[$key] = $all_set_array[$key] ?? null;
         }
-        return $all_set_array;
+        return $all;
+    }
+
+    /**
+     * 結果が出るmin回数を下回る場合は保存のみ
+     *
+     * @return bool
+     */
+    private function isMinResultNumberOfTimes()
+    {
+        if ($this->now_count > 4) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * ゲームセットの場合レスポンスを返す
+     *
+     * @param array $input
+     * @return string
+     */
+    private function isGameSet(array $input)
+    {
+        // 入力キーを取得
+        $this->key = $input['key'];
+        $this->key_digit_one = substr($this->key, 1, 1);
+        $this->key_digit_two = substr($this->key, 0, 1);
+
+        if ($this->isAlineAllRow()) {
+            $this->response_message = self::MARUBATSU[$this->now_category] . 'の勝利です!';
+            return true;
+        }
+
+        if ($this->now_count == 9) {
+            $this->response_message = '引き分けです！';
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -101,7 +126,7 @@ class PlayController extends Controller
      *
      * @return bool
      */
-    private function isCheckGameSet()
+    private function isAlineAllRow()
     {
         switch (true) {
             case $this->isAlineTate():
@@ -205,14 +230,14 @@ class PlayController extends Controller
         // 一番上ではない場合のみ 右上のマスチェック
         if ($this->key_digit_two != 13) {
             for ($i = 1; $this->key_digit_two - $i > 0; $i++) {
-                if ($this->isCategoryNullOrDifferent($this->getCategoryByKey($this->key_digit_two + $i . $this->key_digit_one + $i))) {
+                if ($this->isCategoryNullOrDifferent($this->getCategoryByKey($this->key_digit_two - $i . $this->key_digit_one + $i))) {
                     return false;
                 };
             }
         }
         if ($this->key_digit_two != 31) {
             for ($i = 1; $this->key_digit_one - $i > 0; $i++) {
-                if ($this->isCategoryNullOrDifferent($this->getCategoryByKey($this->key_digit_two - $i . $this->key_digit_one - $i))) {
+                if ($this->isCategoryNullOrDifferent($this->getCategoryByKey($this->key_digit_two + $i . $this->key_digit_one - $i))) {
                     return false;
                 }
             }

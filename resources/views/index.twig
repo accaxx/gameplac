@@ -16,6 +16,7 @@
 {% set marubatsu = { 0: '×', 1: '◯' } %}
 <form name="input" action="/create" method="post">
     <h1>◯×ゲーム</h1>
+    <h2>{{ session('message') }}</h2>
     <h2>{{ attribute(marubatsu, now_category) }}の番です！</h2>
     <table border="1">
         <tr>
