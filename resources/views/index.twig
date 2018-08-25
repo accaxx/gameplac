@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>○☓ゲーム</title>
+    {#<link rel="stylesheet" href="{{ mix('/css/app.css') }}">#}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        table {
+            table-layout: fixed;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+{% set marubatsu = { 0: '×', 1: '◯' } %}
+<form name="input" action="/create" method="post">
+    <h1>◯×ゲーム</h1>
+    <h2>{{ attribute(marubatsu, now_category) }}の番です！</h2>
+    <table border="1">
+        <tr>
+            {% for name, number in {'A11': 11, 'B': 12, 'C': 13} %}
+                <td onclick="document.{{ name }}.submit()">
+                    <form name={{ name }} action="/create" method="post">
+                        <input name="key" type="hidden" value={{ number }}>
+                        <input name="category" type="hidden" value={{ now_category }}>
+                        {{ attribute(marubatsu,all[number]) }}
+                        {{ csrf_field() }}
+                    </form>
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for name, number in {'D': 21, 'E': 22, 'F': 23} %}
+                <td onclick="document.{{ name }}.submit()">
+                    <form name={{ name }} action="/create" method="post">
+                        <input name="key" type="hidden" value={{ number }}>
+                        <input name="category" type="hidden" value={{ now_category }}>
+                        {{ attribute(marubatsu,all[number]) }}
+                        {{ csrf_field() }}
+                    </form>
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for name, number in {'G': 31, 'H': 32, 'I': 33} %}
+                <td onclick="document.{{ name }}.submit()">
+                    <form name={{ name }} action="/create" method="post">
+                        <input name="key" type="hidden" value={{ number }}>
+                        <input name="category" type="hidden" value={{ now_category }}>
+                        {{ attribute(marubatsu,all[number]) }}
+                        {{ csrf_field() }}
+                    </form>
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+</form>
+</body>
+<script src="{{ mix('/js/app.js') }}"></script>
+</html>
