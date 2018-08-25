@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Othello;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Othello\PostRequest;
+use App\Http\Requests\Othello\OthelloRequest;
 use App\Models\Othello\Othello as OthelloModel;
 
 class OthelloController extends Controller
@@ -39,19 +39,30 @@ class OthelloController extends Controller
      */
     public function index()
     {
-        return view('othello');
+        return view('othello')->with(['all' => $this->othello_model->all()->pluck('category', 'key')]);
     }
 
-    public function input(PostRequest $request)
+    /**
+     * 入力
+     *
+     * @param OthelloRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function input(OthelloRequest $request)
     {
         $this->setKeyByDigit($request->all());
 
         if (!$this->updateOtherKeyCategory()) {
             $this->message = "そのマスに置くことはできません。";
         }
-        return redirect()->with('message', $this->message);
+        return redirect('/othello')->with('message', $this->message);
     }
 
+    /**
+     * 他のマスを更新するか否か
+     *
+     * @return bool
+     */
     private function updateOtherKeyCategory()
     {
         if (!$this->changeTateRow()
@@ -97,7 +108,7 @@ class OthelloController extends Controller
         $change_start_key_digit_two = null;
         for ($i = 2; $this->key_digit_two - $i > 0; $i++) {
             $check_key = $this->key_digit_two - $i . $this->key_digit_one;
-            if ($this->isSameCategory($this->getCategoryByKey($check_key))) {
+            if ($this->isSameCategoryWithNowCategory($this->getCategoryByKey($check_key))) {
                 $change_start_key_digit_two = $check_key;
                 break;
             };
@@ -115,7 +126,6 @@ class OthelloController extends Controller
 
     private function changeDown()
     {
-
     }
 
     private function changeYokoRow()

@@ -3,7 +3,7 @@ namespace App\Http\Requests\Othello;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostRequest extends FormRequest
+class OthelloRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,6 @@ class PostRequest extends FormRequest
     {
         return [
             'key' => 'required|unique:plays',
-            'category' => 'required',
         ];
     }
 }

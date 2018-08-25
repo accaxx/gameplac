@@ -8,53 +8,83 @@
             table-layout: fixed;
             width: 800px;
             height: 800px;
+            font-size: 36px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <p>Othello</p>
-    <table border="1">
-        <tr>
-            {% for key in 11..18 %}
-                <td>{{ key }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key in 21..28 %}
-                <td>{{ key }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key in 31..38 %}
-                <td>{{ key }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key in 41..48 %}
-                <td>{{ key }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key in 51..58 %}
-                <td>{{ key }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key in 61..68 %}
-                <td>{{ key }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key in 71..78 %}
-                <td>{{ key }}</td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key in 81..88 %}
-                <td>{{ key }}</td>
-            {% endfor %}
-        </tr>
-    </table>
+    {% set blackorwhite = { 0: '○', 1: '●' } %}
+    <form name="form_othello" action="/othello/create" method="post">
+        {{ csrf_field() }}
+        <table border="1">
+            <tr>
+                {% for key in 11..18 %}
+                    <td onclick="document.form_othello.submit()">
+                        <input type="hidden" name="key" value={{ key }}>
+                        {{ attribute(blackorwhite, all[key]) }}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for key in 21..28 %}
+                    <td onclick="document.form_othello.submit()">
+                        <input type="hidden" name="key" value={{ key }}>
+                        {{ attribute(blackorwhite, all[key]) }}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for key in 31..38 %}
+                    <td onclick="document.form_othello.submit()">
+                        <input type="hidden" name="key" value={{ key }}>
+                        {{ attribute(blackorwhite, all[key]) }}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for key in 41..48 %}
+                    <td onclick="document.form_othello.submit()">
+                        <input type="hidden" name="key" value={{ key }}>
+                        {{ attribute(blackorwhite, all[key]) }}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for key in 51..58 %}
+                    <td onclick="document.form_othello.submit()">
+                        <input type="hidden" name="key" value={{ key }}>
+                        {{ attribute(blackorwhite, all[key]) }}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for key in 61..68 %}
+                    <td onclick="document.form_othello.submit()">
+                        <input type="hidden" name="key" value={{ key }}>
+                        {{ attribute(blackorwhite, all[key]) }}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for key in 71..78 %}
+                    <td onclick="document.form_othello.submit()">
+                        <input type="hidden" name="key" value={{ key }}>
+                        {{ attribute(blackorwhite, all[key]) }}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for key in 81..88 %}
+                    <td onclick="document.form_othello.submit()">
+                        <input type="hidden" name="key" value={{ key }}>
+                        {{ attribute(blackorwhite, all[key]) }}
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </form>
 </body>
 <script src="{{ mix('/js/app.js') }}"></script>
 </html>
