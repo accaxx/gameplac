@@ -1,5 +1,5 @@
 <?php
-namespace App\Usecases\Othello;
+namespace App\Services\Othello;
 
 class BaseChangeLine
 {

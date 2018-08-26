@@ -3,12 +3,12 @@ namespace App\Http\Controllers\Othello;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Othello\OthelloRequest;
-use App\Repositories\Othello\GetCommonData;
-use App\Usecases\Othello\ChangeLeftLine;
-use App\Usecases\Othello\ChangeRightLine;
-use App\Usecases\Othello\ChangeUpLine;
-use App\Usecases\Othello\ChangeDownLine;
-use App\Usecases\Othello\ResetGame;
+use App\Services\Othello\GetCommonData;
+use App\Services\Othello\ChangeLeftLine;
+use App\Services\Othello\ChangeRightLine;
+use App\Services\Othello\ChangeUpLine;
+use App\Services\Othello\ChangeDownLine;
+use App\Services\Othello\ResetGame;
 use Illuminate\Http\Request;
 
 class OthelloController extends Controller

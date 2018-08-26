@@ -1,5 +1,5 @@
 <?php
-namespace App\Usecases\Othello;
+namespace App\Services\Othello;
 
 use App\Repositories\Othello\Othello as OthelloRepository;
 
@@ -35,6 +35,9 @@ class ChangeLeftLine extends BaseChangeLine
                 $this->change_start_key_digit_one = substr($check_key, 1, 1);
                 break;
             };
+            if (($this->key_digit_one - $i) === 1) {
+                return false; // 端まで別の色の場合、ひっくり返さない
+            }
             continue;
         }
 

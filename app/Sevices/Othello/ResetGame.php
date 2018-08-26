@@ -1,5 +1,5 @@
 <?php
-namespace App\Usecases\Othello;
+namespace App\Services\Othello;
 
 use App\Repositories\Othello\Othello as OthelloRepository;
 
