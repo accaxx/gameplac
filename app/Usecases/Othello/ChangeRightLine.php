@@ -3,44 +3,44 @@ namespace App\Usecases\Othello;
 
 use App\Repositories\Othello\Othello as OthelloRepository;
 
-class ChangeUpLine extends BaseChangeLine
+class ChangeRightLine extends BaseChangeLine
 {
     private $next_compare_category;
+    private $change_start_key_digit_one = null;
 
     public function __construct(int $key, int $now_category, array $all_othello)
     {
         parent::__construct($key, $now_category, $all_othello);
-        $this->next_compare_category = $this->key_digit_two + 1 . $this->key_digit_one;
+        $this->next_compare_category = $this->key_digit_two . $this->key_digit_one + 1;
     }
 
     /**
-     * 自分より上のマスを変更するか否か
+     * 自分より左のマスを変更するか否か
      *
      * @return bool
      */
-    public function changeUp()
+    public function changeRight()
     {
-        if (!$this->isChangeUp()) {
+        if (!$this->isChangeRight()) {
             return false;
         }
 
         // 2マス目以降
-        $change_start_key_digit_two = null;
-        for ($i = 2; $this->key_digit_two + $i <= 8; $i++) {
-            $check_key = $this->key_digit_two + $i . $this->key_digit_one;
+        for ($i = 2; $this->key_digit_one + $i <= 8; $i++) {
+            $check_key = $this->key_digit_two . $this->key_digit_one + $i;
             if (is_null($this->all_othello[$check_key])) {
                 return false;
             }
             if ($this->isSameCategoryWithNowCategory($this->all_othello[$check_key])) {
-                $change_start_key_digit_two = substr($check_key, 0, 1);
+                $this->change_start_key_digit_one = substr($check_key, 1, 1);
                 break;
             };
             continue;
         }
 
-        // 今のキーからchange_start_keyまでのカテゴリを全て変える // start_key_digit_twoから自分の一つ上までのぼる
-        for ($i = 1; $change_start_key_digit_two - $i >= $this->key_digit_two; $i++) {
-            OthelloRepository::updateCategoryByKeyAndCategory($change_start_key_digit_two - $i . $this->key_digit_one, $this->now_category);
+        // 今のキーからchange_start_keyまでのカテゴリを全て変える // start_key_digit_oneから自分の一つ左まで
+        for ($i = 1; $this->change_start_key_digit_one - $i >= $this->key_digit_one; $i++) {
+            OthelloRepository::updateCategoryByKeyAndCategory($this->key_digit_two . $this->change_start_key_digit_one - $i, $this->now_category);
         }
         return true;
     }
@@ -50,9 +50,9 @@ class ChangeUpLine extends BaseChangeLine
      *
      * @return bool
      */
-    private function isChangeUp()
+    private function isChangeRight()
     {
-        if ($this->key_digit_two >= 7) {
+        if ($this->key_digit_one >= 7) {
             return false;
         }
 

@@ -34,6 +34,11 @@ class Othello
             ->update(['category' => $category]);
     }
 
+    public static function getMostCommonCategory()
+    {
+        return OthelloModel::all()->mode('category');
+    }
+
     public static function updateCategoryToDefault()
     {
         foreach (OthelloModel::all() as $model) {

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Othello;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Othello\OthelloRequest;
 use App\Repositories\Othello\GetCommonData;
+use App\Usecases\Othello\ChangeLeftLine;
+use App\Usecases\Othello\ChangeRightLine;
 use App\Usecases\Othello\ChangeUpLine;
 use App\Usecases\Othello\ChangeDownLine;
 use App\Usecases\Othello\ResetGame;
@@ -15,6 +17,11 @@ class OthelloController extends Controller
     private $now_count;
     private $now_category;
     private $key;
+
+    const BLACK_OR_WHITE = [
+        0 => '白',
+        1 => '黒',
+    ];
 
     /**
      * OthelloController constructor.
@@ -33,11 +40,16 @@ class OthelloController extends Controller
      */
     public function index(Request $request)
     {
+        if ($this->now_count > 60) {
+            $request->session()->flash('message', self::BLACK_OR_WHITE[$this->getWinnerCategory()].'の勝利です！');
+        }
+
         if (!$request->session()->has('all_othello')) {
             $request->session()->flash('all_othello', GetCommonData::getAllKeyAndCategory());
         } else {
             $request->session()->keep('all_othello');
         }
+
         return view('othello/index')->with('now_category', $this->now_category);
     }
 
@@ -87,9 +99,16 @@ class OthelloController extends Controller
         switch (true) {
             case (new ChangeUpLine($this->key, $this->now_category, $this->all_othello))->changeUp():
             case (new ChangeDownLine($this->key, $this->now_category, $this->all_othello))->changeDown():
+            case (new ChangeRightLine($this->key, $this->now_category, $this->all_othello))->changeRight():
+            case (new ChangeLeftLine($this->key, $this->now_category, $this->all_othello))->changeLeft():
                 return true;
             default:
                 return false;
         }
+    }
+
+    private function getWinnerCategory()
+    {
+        return array_first(GetCommonData::getWinnerCategory());
     }
 }

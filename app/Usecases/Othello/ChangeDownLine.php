@@ -5,9 +5,12 @@ use App\Repositories\Othello\Othello as OthelloRepository;
 
 class ChangeDownLine extends BaseChangeLine
 {
+    private $next_compare_category;
+
     public function __construct(int $key, int $now_category, array $all_othello)
     {
         parent::__construct($key, $now_category, $all_othello);
+        $this->next_compare_category = $this->key_digit_two - 1 . $this->key_digit_one;
     }
 
     /**
@@ -36,7 +39,7 @@ class ChangeDownLine extends BaseChangeLine
         }
 
         // 今のキーからchange_start_keyまでのカテゴリを全て変える // start_key_digit_twoから自分の一つ下までのぼる
-        for ($i = 1; $change_start_key_digit_two + $i < $this->key_digit_two + 1; $i++) {
+        for ($i = 1; $change_start_key_digit_two + $i <= $this->key_digit_two; $i++) {
             OthelloRepository::updateCategoryByKeyAndCategory($change_start_key_digit_two + $i . $this->key_digit_one, $this->now_category);
         }
         return true;
@@ -53,7 +56,7 @@ class ChangeDownLine extends BaseChangeLine
             return false;
         }
 
-        if (!$this->isChangeByNextCategory($this->all_othello[$this->key_digit_two - 1 . $this->key_digit_one])) {
+        if (!$this->isChangeByNextCategory($this->all_othello[$this->next_compare_category])) {
             return false;
         };
 

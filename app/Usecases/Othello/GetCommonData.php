@@ -17,6 +17,11 @@ class GetCommonData
         return OthelloRepository::getAllKeyAndCategory();
     }
 
+    public static function getWinnerCategory()
+    {
+        return OthelloRepository::getMostCommonCategory();
+    }
+
     public static function getNowCount()
     {
         return OthelloRepository::getCountCategoryInputed() - 4 + 1; // デフォルト値と今の順番のため

@@ -21,74 +21,77 @@
         {{ csrf_field() }}
         <div class="message">
             <h2>{{ errors.first('message') }}</h2>
+            <h2>{{ session('message') }}</h2>
             <h3>{{ attribute(blackorwhite, now_category) }}の番です。</h3>
         </div>
-        <table border="1">
-            <tr>
-                {% for key in 11..18 %}
-                    <td onclick="inputOthello({{ key }});">
-                        <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
-                        {{ attribute(blackorwhite, session('all_othello.'~key)) }}
-                    </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for key in 21..28 %}
-                    <td onclick="inputOthello({{ key }})">
-                        <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
-                        {{ attribute(blackorwhite, session('all_othello.'~key)) }}
-                    </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for key in 31..38 %}
-                    <td onclick="inputOthello({{ key }})">
-                        <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
-                        {{ attribute(blackorwhite, session('all_othello.'~key)) }}
-                    </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for key in 41..48 %}
-                    <td onclick="inputOthello({{ key }})">
-                        <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
-                        {{ attribute(blackorwhite, session('all_othello.'~key)) }}
-                    </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for key in 51..58 %}
-                    <td onclick="inputOthello({{ key }})">
-                        <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
-                        {{ attribute(blackorwhite, session('all_othello.'~key)) }}
-                    </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for key in 61..68 %}
-                    <td onclick="inputOthello({{ key }})">
-                        <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
-                        {{ attribute(blackorwhite, session('all_othello.'~key)) }}
-                    </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for key in 71..78 %}
-                    <td onclick="inputOthello({{ key }})">
-                        <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
-                        {{ attribute(blackorwhite, session('all_othello.'~key)) }}
-                    </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for key in 81..88 %}
-                    <td onclick="inputOthello({{ key }})">
-                        <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
-                        {{ attribute(blackorwhite, session('all_othello.'~key)) }}
-                    </td>
-                {% endfor %}
-            </tr>
-        </table>
+        <div class="othello">
+            <table border="1">
+                <tr>
+                    {% for key in 11..18 %}
+                        <td onclick="inputOthello({{ key }});">
+                            <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
+                            {{ attribute(blackorwhite, session('all_othello.'~key)) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for key in 21..28 %}
+                        <td onclick="inputOthello({{ key }})">
+                            <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
+                            {{ attribute(blackorwhite, session('all_othello.'~key)) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for key in 31..38 %}
+                        <td onclick="inputOthello({{ key }})">
+                            <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
+                            {{ attribute(blackorwhite, session('all_othello.'~key)) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for key in 41..48 %}
+                        <td onclick="inputOthello({{ key }})">
+                            <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
+                            {{ attribute(blackorwhite, session('all_othello.'~key)) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for key in 51..58 %}
+                        <td onclick="inputOthello({{ key }})">
+                            <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
+                            {{ attribute(blackorwhite, session('all_othello.'~key)) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for key in 61..68 %}
+                        <td onclick="inputOthello({{ key }})">
+                            <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
+                            {{ attribute(blackorwhite, session('all_othello.'~key)) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for key in 71..78 %}
+                        <td onclick="inputOthello({{ key }})">
+                            <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
+                            {{ attribute(blackorwhite, session('all_othello.'~key)) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for key in 81..88 %}
+                        <td onclick="inputOthello({{ key }})">
+                            <input type="hidden" name="key" id={{ key }} value={{ key }} disabled>
+                            {{ attribute(blackorwhite, session('all_othello.'~key)) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            </table>
+        </div>
     </form>
 </body>
 <script src="{{ mix('/js/app.js') }}"></script>
