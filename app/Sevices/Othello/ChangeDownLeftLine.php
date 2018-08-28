@@ -37,7 +37,7 @@ class ChangeDownLeftLine extends BaseChangeLine
                 $change_start_key_digit_two = substr($check_key, 0, 1);
                 break;
             };
-            if ($this->key_digit_two - $i === 1 || $this->key_digit_one + $i === 8) {
+            if ($this->key_digit_two - $i <= 1 || $this->key_digit_one + $i >= 8) {
                 return false; // 端まで別の色の場合、ひっくり返さない
             }
             continue;

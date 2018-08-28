@@ -16,6 +16,7 @@
 <body>
     <p>Othello</p>
     <a href="/othello/reset">Game Reset</a>
+    <a href="/othello/pass">Pass</a>
     {% set blackorwhite = { 0: '○', 1: '●' } %}
     <form name="form_othello" action="/othello/create" method="post">
         {{ csrf_field() }}

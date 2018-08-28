@@ -2,6 +2,7 @@
 namespace App\Services\Othello;
 
 use App\Repositories\Othello\Othello as OthelloRepository;
+use App\Repositories\Othello\OthelloGame as OthelloGameRepository;
 
 class GetCommonData
 {
@@ -25,6 +26,11 @@ class GetCommonData
     public static function getNowCount()
     {
         return OthelloRepository::getCountCategoryInputed() - 4 + 1; // デフォルト値と今の順番のため
+    }
+
+    public static function getPassCount()
+    {
+        return OthelloGameRepository::getPassCount();
     }
 }
 

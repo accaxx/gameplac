@@ -18,4 +18,5 @@ Route::post('/create', 'PlayController@create');
 // オセロ
 Route::post('/othello/create', 'Othello\OthelloController@input');
 Route::get('/othello/reset', 'Othello\OthelloController@resetGame');
+Route::get('/othello/pass', 'Othello\OthelloController@pass');
 Route::get('/othello', 'Othello\OthelloController@index');

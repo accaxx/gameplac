@@ -12,13 +12,14 @@ use App\Services\Othello\ChangeLeftLine;
 use App\Services\Othello\ChangeRightLine;
 use App\Services\Othello\ChangeUpLine;
 use App\Services\Othello\ChangeDownLine;
-use App\Services\Othello\ResetGame;
+use App\Services\Othello\Game;
 use Illuminate\Http\Request;
 
 class OthelloController extends Controller
 {
     private $all_othello;
     private $now_count;
+    private $pass_count;
     private $now_category;
     private $key;
 
@@ -33,7 +34,8 @@ class OthelloController extends Controller
     public function __construct()
     {
         $this->now_count = GetCommonData::getNowCount();
-        $this->now_category = $this->now_count % 2;
+        $this->pass_count = GetCommonData::getPassCount() ?? 0;
+        $this->now_category = ($this->now_count + $this->pass_count) % 2;
     }
 
     /**
@@ -45,7 +47,7 @@ class OthelloController extends Controller
     public function index(Request $request)
     {
         if ($this->now_count > 60) {
-            $request->session()->flash('message', self::BLACK_OR_WHITE[$this->getWinnerCategory()].'の勝利です！');
+            $request->session()->flash('message', self::BLACK_OR_WHITE[$this->getWinnerCategory()] . 'の勝利です！');
         }
 
         if (!$request->session()->has('all_othello')) {
@@ -78,6 +80,15 @@ class OthelloController extends Controller
         return redirect('/othello');
     }
 
+    public function pass(Request $request)
+    {
+        Game::pass();
+        $request->session()->keep('all_othello'); // 前回入力されていた全てのマス情報をもう一度sessionにいれる
+        $request->session()->flash('message', 'パスしました');
+
+        return redirect('/othello');
+    }
+
     /**
      * ゲームをリセットする
      *
@@ -86,7 +97,7 @@ class OthelloController extends Controller
      */
     public function resetGame(Request $request)
     {
-        ResetGame::reset();
+        Game::reset();
         $this->all_othello = GetCommonData::getAllKeyAndCategory();
         $request->session()->flash('all_othello', $this->all_othello);
 
