@@ -3,6 +3,10 @@ namespace App\Http\Controllers\Othello;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Othello\OthelloRequest;
+use App\Services\Othello\ChangeUpLeftLine;
+use App\Services\Othello\ChangeUpRightLine;
+use App\Services\Othello\ChangeDownRightLine;
+use App\Services\Othello\ChangeDownLeftLine;
 use App\Services\Othello\GetCommonData;
 use App\Services\Othello\ChangeLeftLine;
 use App\Services\Othello\ChangeRightLine;
@@ -96,17 +100,41 @@ class OthelloController extends Controller
      */
     private function updateOtherKeyCategory()
     {
-        switch (true) {
-            case (new ChangeUpLine($this->key, $this->now_category, $this->all_othello))->changeUp():
-            case (new ChangeDownLine($this->key, $this->now_category, $this->all_othello))->changeDown():
-            case (new ChangeRightLine($this->key, $this->now_category, $this->all_othello))->changeRight():
-            case (new ChangeLeftLine($this->key, $this->now_category, $this->all_othello))->changeLeft():
-                return true;
-            default:
-                return false;
+        $is_changed = false;
+
+        if ((new ChangeUpLine($this->key, $this->now_category, $this->all_othello))->changeUp()) {
+            $is_changed = true;
         }
+        if ((new ChangeDownLine($this->key, $this->now_category, $this->all_othello))->changeDown()) {
+            $is_changed = true;
+        }
+        if ((new ChangeRightLine($this->key, $this->now_category, $this->all_othello))->changeRight()) {
+            $is_changed = true;
+        }
+        if ((new ChangeLeftLine($this->key, $this->now_category, $this->all_othello))->changeLeft()) {
+            $is_changed = true;
+        }
+        if ((new ChangeUpLeftLine($this->key, $this->now_category, $this->all_othello))->changeUpLeft()) {
+            $is_changed = true;
+        }
+        if ((new ChangeUpRightLine($this->key, $this->now_category, $this->all_othello))->changeUpRight()) {
+            $is_changed = true;
+        }
+        if ((new ChangeDownRightLine($this->key, $this->now_category, $this->all_othello))->changeDownRight()) {
+            $is_changed = true;
+        }
+        if ((new ChangeDownLeftLine($this->key, $this->now_category, $this->all_othello))->changeDownLeft()) {
+            $is_changed = true;
+        }
+
+        return $is_changed;
     }
 
+    /**
+     * コマが多いカテゴリを返す
+     *
+     * @return mixed
+     */
     private function getWinnerCategory()
     {
         return array_first(GetCommonData::getWinnerCategory());
