@@ -9,11 +9,13 @@
 * MySQL 5.6
 
 ## 使い方
+```
 git clone https://github.com/aihara005/gameplac.git
 composer install
 yarn install
 php artisan serve
 localhost:3000へアクセス
+```
 
 ### / ： ○☓ゲーム(3 ✕ 3)
 最低限
