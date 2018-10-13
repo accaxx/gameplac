@@ -1,0 +1,15 @@
+.all-box {
+  display: flex;
+  height: 400px;
+  width: 600px;
+  margin: auto;
+
+  .box {
+    font-size: 50px;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+  }
+}
+
+

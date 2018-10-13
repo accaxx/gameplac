@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SLOT</title>
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
+    <h1>Slot</h1>
+    <div class="all-box">
+        <p class="box shuffle one">1</p>
+        <p class="box shuffle two">1</p>
+        <p class="box shuffle three">1</p>
+    </div>
+    <div class="all-button">
+        <p class="button one">a</p>
+        <p class="button two">b</p>
+        <p class="button three">c</p>
+    </div>
+    <script src="{{ mix('/js/app.js') }}"></script>
+</html>
