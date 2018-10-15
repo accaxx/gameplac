@@ -6,16 +6,26 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    <h1>Slot</h1>
-    <div class="all-box">
-        <p class="box shuffle one">1</p>
-        <p class="box shuffle two">1</p>
-        <p class="box shuffle three">1</p>
-    </div>
-    <div class="all-button">
-        <p class="button one">a</p>
-        <p class="button two">b</p>
-        <p class="button three">c</p>
-    </div>
-    <script src="{{ mix('/js/app.js') }}"></script>
+<h1>Slot</h1>
+<div class="all-box">
+    <p class="box">
+        <input type="text" id="box_1" class="item">
+        </input>
+        <input type="button" id="button_1" class="button">
+        </input>
+    </p>
+    <p class="box">
+        <input type="text" id="box_2" class="item">
+        </input>
+        <input type="button" id="button_2" class="button">
+        </input>
+    </p>
+    <p class="box">
+        <input type="text" id="box_3" class="item">
+        </input>
+        <input type="button" id="button_3" class="button">
+        </input>
+    </p>
+</div>
+<script src="{{ mix('/js/app.js') }}"></script>
 </html>

@@ -5,11 +5,15 @@
   margin: auto;
 
   .box {
-    font-size: 50px;
-    width: 100px;
-    height: 100px;
+    input {
+      font-size: 50px;
+      width: 100px;
+      height: 100px;
+      text-align: center;
+      .button {
+        width: 30px;
+      }
+    }
     margin: auto;
   }
 }
-
-
